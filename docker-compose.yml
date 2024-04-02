@@ -1,0 +1,19 @@
+name: logify
+services:
+  cockroach:
+    environment:
+      - COCKROACH_DATABASE=logify_cockroach_db_dev
+      - COCKROACH_USER=username
+      - COCKROACH_PASSWORD=password
+    container_name: roach-single
+    hostname: roach-single
+    ports:
+      - 26257:26257
+      - 8080:8080
+    volumes:
+      - logify-dev-roach:/cockroach/cockroach-data
+    image: cockroachdb/cockroach:v23.2.3
+    command: start-single-node --http-addr=roach-single:8080
+volumes:
+  logify-dev-roach:
+    name: logify-dev-roach
