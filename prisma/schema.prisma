@@ -19,16 +19,21 @@ model Log {
 }
 
 model Site {
-    id   String @id @default(cuid())
-    name String
-    url  String
-    logs Log[]
+    id             String       @id @default(cuid())
+    siteId         String       @unique
+    name           String
+    url            String
+    logs           Log[]
+    organization   Organization @relation(fields: [organizationId], references: [id])
+    organizationId String
 }
 
-model Organisation {
-    id    String @id @default(cuid())
-    name  String
-    users User[]
+model Organization {
+    id             String @id @default(cuid())
+    organizationId String @unique
+    name           String
+    users          User[]
+    sites          Site[]
 }
 
 model Account {
@@ -66,7 +71,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    organisations Organisation[]
+    organizations Organization[]
 }
 
 model VerificationToken {
