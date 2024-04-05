@@ -37,6 +37,7 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 import SiteCard from "./_components/SiteCard";
+import { toast } from "sonner";
 
 export default function DashPage({
   params,
@@ -52,7 +53,6 @@ export default function DashPage({
   const sites = api.site.getOrganizationSites.useQuery({
     id: activeOrganization?.id ?? "",
   });
-
   const newSiteForm = useForm<z.infer<typeof newSiteSchema>>({
     resolver: zodResolver(newSiteSchema),
     values: {
@@ -69,6 +69,10 @@ export default function DashPage({
   function addSite(data: z.infer<typeof newSiteSchema>) {
     // TODO: handle errors
     newSiteMutation.mutate(data);
+    if (newSiteMutation.error) {
+      console.error(newSiteMutation.error);
+      toast.error("Failed to create site, please try again later.");
+    }
   }
 
   return (

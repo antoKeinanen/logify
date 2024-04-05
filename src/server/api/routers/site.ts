@@ -13,6 +13,7 @@ export const siteRouter = createTRPCRouter({
   createSite: protectedProcedure
     .input(newSiteSchema)
     .mutation(async ({ ctx, input }) => {
+
       const user = await getUserOrganizations(ctx.session.user.id);
       if (
         !user!.organizations.find((org) => org.id === input.activeOrganization)
