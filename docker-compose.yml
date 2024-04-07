@@ -1,0 +1,19 @@
+name: observatory
+services:
+  cockroach:
+    environment:
+      - COCKROACH_DATABASE=observatory_cockroach_db_dev
+      - COCKROACH_USER=username
+      - COCKROACH_PASSWORD=password
+    container_name: observatory_cockroach_db_dev
+    hostname: observatory-dev-roach
+    ports:
+      - 26257:26257
+      - 8080:8080
+    volumes:
+      - observatory-dev-roach:/cockroach/cockroach-data
+    image: cockroachdb/cockroach:v23.2.3
+    command: start-single-node --http-addr=observatory-dev-roach:8080
+volumes:
+  observatory-dev-roach:
+    name: observatory-dev-roach
