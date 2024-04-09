@@ -14,6 +14,16 @@ services:
       - observatory-dev-roach:/cockroach/cockroach-data
     image: cockroachdb/cockroach:v23.2.3
     command: start-single-node --http-addr=observatory-dev-roach:8080
+
+  rabbit:
+    image: rabbitmq:3-management-alpine
+    container_name: observatory-rabbitmq-dev
+    ports:
+    - 5672:5672
+    - 15672:15672
+    volumes:
+        - ~/.docker-conf/observatory-rabbitmq-dev/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/observatory-rabbitmq-dev/log/:/var/log/rabbitmq
 volumes:
   observatory-dev-roach:
     name: observatory-dev-roach

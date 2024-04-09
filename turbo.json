@@ -21,6 +21,7 @@
     },
     "db:studio": {
       "cache": false
-    }
+    },
+    "test": {}
   }
 }
